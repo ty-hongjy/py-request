@@ -7,10 +7,10 @@ def getHTMLText(url):
 		r=requests.get(url,timeout=30)
 		r.raise_for_status()
 		r.status_code
-		print(r.encoding)
-		print(r.apparent_encoding)
+		#print(r.encoding)
+		#print(r.apparent_encoding)
 		r.encoding=r.apparent_encoding
-		print(r.text[:1000])
+		#print(r.text[:1000])
 		#q.head(url)
 		#print(r.head(url))
 		r.text
