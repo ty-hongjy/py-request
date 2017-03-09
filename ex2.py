@@ -1,5 +1,6 @@
 import requests
 import os
+import re
 from bs4 import BeautifulSoup
 
 def getHTMLText(url):
@@ -33,6 +34,7 @@ url="http://m.ip138.com/ip.asp?ip="
 url=url+'202.204.80.112'
 demo=getHTMLText(url)
 soup=BeautifulSoup(demo,'html.parser')
+#print(soup)
 '''print(soup)
 print(soup.p.attrs)
 print(soup.p.name)
@@ -44,3 +46,11 @@ print(soup.head.contents)
 print(soup.body.contents)
 print(soup.prettify())
 '''
+for link in soup.find_all('a'):
+	print(link.get('href'))
+
+for tag in soup.find_all(re.compile('ht')):
+	print(tag.name)
+
+for str in soup.find_all(string=re.compile('ht')):
+	print(str)
