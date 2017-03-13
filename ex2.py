@@ -8,8 +8,8 @@ def getHTMLText(url):
 		r=requests.get(url,timeout=30)
 		r.raise_for_status()
 		r.status_code
-		#print(r.encoding)
-		#print(r.apparent_encoding)
+		print(r.encoding)
+		print(r.apparent_encoding)
 		r.encoding=r.apparent_encoding
 		#print(r.text[:1000])
 		#q.head(url)
@@ -32,10 +32,13 @@ if __name__ == '__main__':
 print("search IP")
 url="http://m.ip138.com/ip.asp?ip="
 url=url+'202.204.80.112'
+url='http://learning.sohu.com/20170227/n481870520.shtml'
+#url='http://www.zuihaodaxue.cn/zuihaodaxuepaiming2016.html'
 demo=getHTMLText(url)
 soup=BeautifulSoup(demo,'html.parser')
 #print(soup)
-'''print(soup)
+'''
+print(soup)
 print(soup.p.attrs)
 print(soup.p.name)
 print(soup.p.string)
@@ -44,8 +47,10 @@ print(soup.head)
 print("soup.head.contents:")
 print(soup.head.contents)
 print(soup.body.contents)
-print(soup.prettify())
 '''
+#print(soup.prettify())
+print(demo)
+
 for link in soup.find_all('a'):
 	print(link.get('href'))
 
