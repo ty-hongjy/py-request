@@ -23,6 +23,17 @@ def fillUnivList(ulist, html):
 			 tds=tr('td')
 			 ulist.append([tds[0].string,tds[1].string,tds[3].string])
 
+def fillUnivList1(ulist, html):
+
+    soup = BeautifulSoup(html, "html.parser")
+    neirong = soup.table.contents
+    #print(neirong)
+    for form in neirong[3:504]:
+        if isinstance(form, bs4.element.Tag):
+            tds = form('td')   #将所有td标签存为一个列表类型tds
+            ulist.append([tds[0].string, tds[1].string, tds[3].string])    #在ulist中增加相应字段
+            print([tds[0].string, tds[1].string, tds[3].string])
+
 
 def printUnivList(ulist,num):
 	 print("{:^10}\t{:^20}\t{:^10}".format("排名","学校名称","总分"))
@@ -38,8 +49,8 @@ def main():
 
 	 html=getHTMLText(url)
 	 #print(html)
-	 fillUnivList(uinfo,html)
-	 printUnivList(uinfo,20) #20 univs main()
+	 fillUnivList1(uinfo,html)
+	 #printUnivList(uinfo,20) #20 univs main()
 
 if __name__ == '__main__':
 	main()
