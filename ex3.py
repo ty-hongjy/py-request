@@ -21,7 +21,10 @@ def fillUnivList(ulist, html):
 	 for tr in soup.find('tbody').children:
 		 if isinstance(tr,bs4.element.Tag):
 			 tds=tr('td')
+#			 print(tds[0].string,tds[1].string,tds[3].string)
+                         
 			 ulist.append([tds[0].string,tds[1].string,tds[3].string])
+
 
 def fillUnivList1(ulist, html):
 
@@ -49,8 +52,8 @@ def main():
 
 	 html=getHTMLText(url)
 	 #print(html)
-	 fillUnivList1(uinfo,html)
-	 #printUnivList(uinfo,20) #20 univs main()
+	 fillUnivList(uinfo,html)
+	 printUnivList(uinfo,20) #20 univs main()
 
 if __name__ == '__main__':
 	main()
