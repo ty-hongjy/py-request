@@ -35,8 +35,7 @@ url=url+'202.204.80.112'
 url='http://learning.sohu.com/20170227/n481870520.shtml'
 #url='http://www.zuihaodaxue.cn/zuihaodaxuepaiming2016.html'
 demo=getHTMLText(url)
-soup=BeautifulSoup(demo,'html.parser')
-#print(soup)
+soup=BeautifulSoup(demo,'html.parser')#print(soup)
 '''
 print(soup)
 print(soup.p.attrs)
