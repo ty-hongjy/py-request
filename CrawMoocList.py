@@ -17,7 +17,9 @@ def getHTMLText(url):
         r=requests.get(url,headers=kv,timeout=30)
         #r=requests.get(url,timeout=30)
         r.raise_for_status()
-        r.encoding=r.apparent_encoding
+        #r.encoding=r.apparent_encoding
+        r.encoding='UTF-8'
+        #r.encoding='gbk'
         return r.text
     except:
         return "err"
@@ -34,14 +36,14 @@ def CategoryList(ilt,html):
 
     try:
         tlt=re.findall(r'data-label="..{2,5}"',html)
-        print(tlt)
-        print(len(tlt))
+        #print(tlt)
+        #print(len(tlt))
         
         for i in range(len(tlt)):
                 cate=eval(tlt[i].split('=')[1])
-                print(cate)
+                #print(cate)
                 cate1=re.findall(r'.*[^\d{1,2}]',cate)
-                print(cate1)
+                #print(cate1)
                 ilt.append(cate1)
     except:
         print("")
@@ -53,10 +55,44 @@ def printCategoryList(ilt):
     for g in ilt:
         count=count+1
         print(tplt.format(count,g[0]))
+        
+def CourseList(ilt,html):
+    print(html)
+    #html=getHTMLText(course_url)
+    soup=BeautifulSoup(html,'html.parser')
+    soupbody=soup.body.contents
+    #print(soupbody)
+    #print(soup.body.prettify())
+    #soup.get(attrs)
+    #ls=re.findall('r\"data-cate=*\"',html)
+    #print(ls)
+
+    try:
+        tlt=re.findall(r'alt="..{2,20}"',html)
+        print(len(tlt))
+        print(tlt)
+        
+        for i in range(len(tlt)):
+                course=eval(tlt[i].split('=')[1])
+                print(course)
+                #cate1=re.findall(r'.*[^\d{1,2}]',cate)
+                #print(cate1)
+                ilt.append(course)
+    except:
+        print("")
+
+def printCourseList(ilt):
+    tplt="{:4}\t{:8}"
+    print(tplt.format("序号","课程"))
+    count=0
+    for g in ilt:
+        count=count+1
+        print(tplt.format(count,g[0]))
 
 
 def main():
     infoList=[]
+    courseList=[]
 
     category_url='http://www.icourse163.org/category/all'
     category_url='http://www.icourse163.org/'
@@ -64,8 +100,12 @@ def main():
     course_url='http://www.icourse163.org/category/computer'
     html=getHTMLText(category_url)
     CategoryList(infoList,html)
-    printCategoryList(infoList)
+    #printCategoryList(infoList)
+
+    html=getHTMLText(course_url)
+    print(html)
+    #CourseList(courseList,html)
+    #printCourseList(courseList)
     
 if __name__ == '__main__':
     main()
-        
