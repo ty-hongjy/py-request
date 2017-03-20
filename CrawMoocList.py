@@ -25,28 +25,27 @@ def getHTMLText(url):
         return "err"
 
 def CategoryList(ilt,html):
-    #print(html)
-    #html=getHTMLText(course_url)
-    #soup=BeautifulSoup(html,'html.parser')
-    #soupbody=soup.body.contents
-    #print(soup.body.prettify())
-    #soup.get(attrs)
-    #ls=re.findall('r\"data-cate=*\"',html)
-    #print(ls)
-
     try:
         tlt=re.findall(r'data-label="..{2,5}"',html)
-        #print(tlt)
-        #print(len(tlt))
         
         for i in range(len(tlt)):
                 cate=eval(tlt[i].split('=')[1])
-                #print(cate)
                 cate1=re.findall(r'.*[^\d{1,2}]',cate)
-                #print(cate1)
                 ilt.append(cate1)
     except:
         print("")
+        
+def CategoryList1(ilt,html):
+        soup=BeautifulSoup(html,'html.parser')
+        for p in soup.select(".slideTop-cateFunc-f"):
+            #print(p.text)
+            #print(p.select(".slideTop-cateFunc-f_div200_a201"))
+            #print(p.select(".slideTop-cateFunc-f_div200_a201")[1].text)
+            print(p.a.attrs['href'])
+            #print(p.get("a"))
+            ilt.append([p.text,p.a.attrs['href']])
+        ilt.append(["Quit",""])
+            
 
 def printCategoryList(ilt):
     tplt="{:4}\t{:8}"
@@ -81,6 +80,7 @@ def CourseList(ilt,html):
     except:
         print("")
 
+
 def printCourseList(ilt):
     tplt="{:4}\t{:8}"
     print(tplt.format("序号","课程"))
@@ -97,13 +97,13 @@ def main():
     category_url='http://www.icourse163.org/category/all'
     category_url='http://www.icourse163.org/'
 
-    course_url='http://www.icourse163.org/category/computer'
     html=getHTMLText(category_url)
-    CategoryList(infoList,html)
-    #printCategoryList(infoList)
+    CategoryList1(infoList,html)
+    printCategoryList(infoList)
 
-    html=getHTMLText(course_url)
-    print(html)
+    course_url='http://www.icourse163.org/category/computer'
+    #html=getHTMLText(course_url)
+    #print(html)
     #CourseList(courseList,html)
     #printCourseList(courseList)
     
