@@ -41,7 +41,7 @@ def CategoryList1(ilt,html):
             #print(p.text)
             #print(p.select(".slideTop-cateFunc-f_div200_a201"))
             #print(p.select(".slideTop-cateFunc-f_div200_a201")[1].text)
-            print(p.a.attrs['href'])
+            #print(p.a.attrs['href'])
             #print(p.get("a"))
             ilt.append([p.text,p.a.attrs['href']])
         ilt.append(["Quit",""])
@@ -49,7 +49,9 @@ def CategoryList1(ilt,html):
 
 def printCategoryList(ilt):
     tplt="{:4}\t{:8}"
-    print(tplt.format("序号","分类"))
+    print(tplt.format("序号","分类","URL"))
+#    tplt="{:4}\t{:8}\t{:20}"
+#   print(tplt.format("序号","分类","URL"))
     count=0
     for g in ilt:
         count=count+1
@@ -65,9 +67,12 @@ def CourseList(ilt,html):
     #soup.get(attrs)
     #ls=re.findall('r\"data-cate=*\"',html)
     #print(ls)
+    soup=BeautifulSoup(r.text,'html.parser')
+    soup.select(".m-result-view")
 
     try:
         tlt=re.findall(r'alt="..{2,20}"',html)
+        
         print(len(tlt))
         print(tlt)
         
