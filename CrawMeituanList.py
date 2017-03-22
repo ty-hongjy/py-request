@@ -45,7 +45,9 @@ def CategoryList1(ilt,html):
             #print(p.get("a"))
             ilt.append([p.text,p.attrs['href']])
         ilt.append(["Quit",""])
-            
+        
+        print(soup.select(".nav-level2-keywords--content"))
+
 
 def printCategoryList(ilt):
     tplt="{:4}\t{:8}"
@@ -93,14 +95,20 @@ def SubCategoryList1(html):
     #html=getHTMLText(course_url)
     soup=BeautifulSoup(html,'html.parser')
     #print(soup.ul)
-    print(soup.select(".inline-block-list"))
-
-    #ilt.append(['234'])
+    #print(soup.select(".inline-block-list"))
+    #print(soup.select(".inline-block-list")[0])#0
+    #print(soup.select(".filter-sect-list")[12])#2
+    #print(soup.select(".recommend-movies")[0])
+    #print(soup.select(".reco-movieinfo__name"))#[0])#3
+    print(soup.select(".nav-level2-keywords--content"))
+    print(soup.select(".nav-level2-keywords--title"))
+    #print(soup.body.prettify())
 
 
 def printSubCategoryList(ilt):
     tplt="{:4}\t{:8}"
-    print(tplt.format("序号","课程"))
+    print(tplt.format("序号","课程"))    #ilt.append(['234'])
+
     count=0
     for g in ilt:
         count=count+1
@@ -113,19 +121,18 @@ def main():
     list1=[]
     
     category_url='http://ty.meituan.com/'
-    #category_url='http://www.icourse163.org/'
 
     html=getHTMLText(category_url)
     CategoryList1(CategoryList,html)
     printCategoryList(CategoryList)
 
-    SubCategory_url=CategoryList[0][1]
+    SubCategory_url=CategoryList[1][1]
     print(SubCategory_url)
     html=getHTMLText(SubCategory_url)
-    #print(html)
     SubCategoryList1(html)
+    http://ty.meituan.com/multiact/default//category/meishi
+    http://ty.meituan.com/multiact/default//category/meishi
     #SubCategoryList(SubCategoryList,html)
-    #printCourseList(courseList)
     
 if __name__ == '__main__':
     main()
