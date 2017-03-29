@@ -7,6 +7,7 @@ Edited By Spyder Editor
 At first get meituan category list,then get subcategory list by 
 selelct a number of category.
 
+
 @author:hongjy
 @email:hongjy1@163.com
 """
@@ -28,12 +29,14 @@ def getHTMLText(url):
     except:
         return"err"
 
+#get Category list by classname(nav-level1__label)
 def getCategoryList(ilt,html):
     soup=BeautifulSoup(html,'html.parser')
     for p in soup.select(".nav-level1__label"):
         ilt.append([p.text,p.attrs['href']])
     ilt.append(["Quit",""])
-    
+ 
+#print Category list
 def printCategoryList(ilt):
     tplt="{:4}\t{:8}"
     print(tplt.format("序号","分类"))
@@ -41,7 +44,8 @@ def printCategoryList(ilt):
     for g in ilt:
         count=count+1
         print(tplt.format(count,g[0],g[1]))
-    
+
+#get subcategory list by classname(nav-level2-keywords--content)    
 def getSubCategoryList(ilt,html):
     	count=0
     	soup=BeautifulSoup(html,'html.parser')
@@ -51,6 +55,7 @@ def getSubCategoryList(ilt,html):
     		ilt.append(g.text)
     	print("-----------")
 
+#print subCategory list
 def printSubCategoryList(ilt,num):
     	print("-----------")
     	print(ilt[num])
@@ -58,7 +63,8 @@ def printSubCategoryList(ilt,num):
 def main():
     CategoryList=[]
     SubCategoryList=[]
-    
+
+    #init data list    
     category_url='http://ty.meituan.com/'
     
     html=getHTMLText(category_url)
@@ -66,6 +72,7 @@ def main():
     printCategoryList(CategoryList)
     getSubCategoryList(SubCategoryList,html)
 
+    #main loop 
     while True:
         sele=input("请输入选择子类编号：[1-9],显示分类请输入[R]or[r],退出选择[Q]or[q]")
         if sele=="Q" or sele=="q":
