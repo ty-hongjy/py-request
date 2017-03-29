@@ -11,6 +11,8 @@ import requests
 import re 
 from bs4 import BeautifulSoup
 
+#SubCategoryList=[]
+
 def getHTMLText(url):
     try:
         kv={'user-agent':'Mozilla/5.0'}
@@ -46,7 +48,7 @@ def CategoryList1(ilt,html):
             ilt.append([p.text,p.attrs['href']])
         ilt.append(["Quit",""])
         
-        print(soup.select(".nav-level2-keywords--content"))
+        print(len(soup.select(".nav-level2-keywords--content")))
 
 
 def printCategoryList(ilt):
@@ -59,51 +61,56 @@ def printCategoryList(ilt):
         count=count+1
         print(tplt.format(count,g[0],g[1]))
         
-def SubCategoryList(ilt,html):
-    print(html)
-    #html=getHTMLText(course_url)
-    soup=BeautifulSoup(html,'html.parser')
-    #soupbody=soup.body.contents
-    #print(soupbody)
-    #print(soup.body.prettify())
-    #soup.get(attrs)
-    #ls=re.findall('r\"data-cate=*\"',html)
-    #print(ls)
-    #soup=BeautifulSoup(r.text,'html.parser')
-    #print(soup.ul)
-    #print(soup.select(".inline-block-list"))
-    ilt.append(['234'])
-    
-'''    try:
-        tlt=re.findall(r'alt="..{2,20}"',html)
-        
-        print(len(tlt))
-        print(tlt)
-        
-        for i in range(len(tlt)):
-                course=eval(tlt[i].split('=')[1])
-                print(course)
-                #cate1=re.findall(r'.*[^\d{1,2}]',cate)
-                #print(cate1)
-                ilt.append(course)
-    except:
-        print("")
-'''
 
-def SubCategoryList1(html):
+def getSubCategoryList(ilt,html,num):
     #print(html)
     #html=getHTMLText(course_url)
     soup=BeautifulSoup(html,'html.parser')
-    #print(soup.ul)
-    #print(soup.select(".inline-block-list"))
-    #print(soup.select(".inline-block-list")[0])#0
-    #print(soup.select(".filter-sect-list")[12])#2
-    #print(soup.select(".recommend-movies")[0])
-    #print(soup.select(".reco-movieinfo__name"))#[0])#3
-    print(soup.select(".nav-level2-keywords--content"))
-    print(soup.select(".nav-level2-keywords--title"))
+    if num==0:
+        print(soup.select(".inline-block-list"))
+        for a1 in soup.select(".inline-block-list")[0]:
+            print(a1.li.a)
+        print(soup.select(".inline-block-list")[0].text)
+    elif num==1:
+        str1=soup.select(".filter-sect-list")[12]
+        #print(str1)
+        #for a1 in str1:
+        #print(len(str1))
+        
+        if len(str1.text.strip())>0:
+            print(str1.text)
+        
+        '''for a in str1:
+            if len(a.text.strip())>0:
+                print(a.strip())
+         '''   
+            
+            
+            #print(soup.select(".filter-sect-list")[12])
+            #print(soup.select(".filter-sect-list")[12].text)
+            #print("----------")
+            #str1=soup.select(".filter-sect-list")[12].li
+            #str1=soup.select(".filter-sect-list")[12].find_all("label")
+            #str2=re.findall("<lable>*</label>",str1)
+            #str3=re.split()
+            #print(str2)
+            #str2=str1.find_all(a)
+            #print(str2)
+            #str2=soup.find_all("label")
+            #print(str2)
+    elif num==2:
+        #print(soup.select(".recommend-movies"))
+        print(soup.select(".recommend-movies")[0].text)
+        #print(type(soup.select(".recommend-movies")[0].text))
+        #print(len(soup.select(".recommend-movies")[0].text))
+        
+        #print(soup.select(".recommend-movies")[0].h3.text)
+        #print(soup.select(".reco-movieinfo__name"))#[0])#3
+    #print(soup.select(".nav-level2-keywords--content"))
+    #print(soup.select(".nav-level2-keywords--title"))
     #print(soup.body.prettify())
-
+    else:
+        print("not fininsh,waiting ")
 
 def printSubCategoryList(ilt):
     tplt="{:4}\t{:8}"
@@ -118,7 +125,6 @@ def printSubCategoryList(ilt):
 def main():
     CategoryList=[]
     SubCategoryList=[]
-    list1=[]
     
     category_url='http://ty.meituan.com/'
 
@@ -126,13 +132,21 @@ def main():
     CategoryList1(CategoryList,html)
     printCategoryList(CategoryList)
 
-    SubCategory_url=CategoryList[1][1]
-    print(SubCategory_url)
-    html=getHTMLText(SubCategory_url)
-    SubCategoryList1(html)
-    http://ty.meituan.com/multiact/default//category/meishi
-    http://ty.meituan.com/multiact/default//category/meishi
-    #SubCategoryList(SubCategoryList,html)
+    while True:
+        sele=input("请输入选择子类编号：[1-14],显示分类请输入[R] or [r],退出选择[Q] or [q]")
+        if sele=="Q" or sele=="q":
+            break
+        if sele=="R" or sele=="r":
+            printCategoryList(CategoryList)
+        else:
+            subcatnum=eval(sele)-1
+            SubCategory_url=CategoryList[subcatnum][1]
+            print(SubCategory_url)
+            html=getHTMLText(SubCategory_url)
+            getSubCategoryList(SubCategoryList,html,subcatnum)
+            #SubCategoryList1(html,subcatnum)
+            
+    print("End")
     
 if __name__ == '__main__':
     main()
