@@ -1,8 +1,14 @@
 #-*-coding:utf-8-*-
 """
-CreatedonFriMar1714:46:492017
+Created on Fri Mar 17 14:46:49 2017
+
+Edited By Spyder Editor
+
+At first get meituan category list,then get subcategory list by 
+selelct a number of category.
 
 @author:hongjy
+@email:hongjy1@163.com
 """
 
 #CrowMeiTuanList.py
@@ -21,17 +27,6 @@ def getHTMLText(url):
         return r.text
     except:
         return"err"
-
-def CategoryList1(ilt,html):
-    try:
-        tlt=re.findall(r'data-label="..{2,5}"',html)
-        
-        for i in range(len(tlt)):
-            cate=eval(tlt[i].split('=')[1])
-            cate1=re.findall(r'.*[^\d{1,2}]',cate)
-            ilt.append(cate1)
-    except:
-        print("")
 
 def getCategoryList(ilt,html):
     soup=BeautifulSoup(html,'html.parser')
